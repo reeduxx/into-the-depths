@@ -6,6 +6,8 @@ def main():
     term = Terminal()
     menu = MainMenu(term)
     option = menu.get_selection()
+    player = Player("Test", term)
+    print(player)
 
 if __name__ == '__main__':
 	main()
