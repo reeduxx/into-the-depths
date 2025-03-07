@@ -1,9 +1,10 @@
 from blessed import Terminal
 from art import TITLE_ASCII
+from config import VERSION
 from util import get_colors
 
 class MainMenu:
-    MENU_OPTIONS = ["Continue", "New Game", "Exit"]
+    MENU_OPTIONS = ["Continue", "New Game", "Credits", "Exit"]
     OPAQUE_BLOCKS = {'█', '▌', '▀', '▄'}
     TRANSLUCENT_BLOCKS = {'▓', '▒', '░'}
     
@@ -22,6 +23,14 @@ class MainMenu:
             f"{translucent_color}{char}{self.term.normal}" if char in self.TRANSLUCENT_BLOCKS else char
             for char in line
         )))
+        
+        self.display_version()
+    
+    def display_version(self):
+        version_text = f"v{VERSION}"
+        
+        with self.term.location(self.term.width - len(version_text) - 1, self.term.height - 1):
+            print(version_text)
     
     def display_menu(self):
         print('\n')
