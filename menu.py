@@ -39,7 +39,7 @@ class MainMenu:
             cursor_y = self.menu_start_y + (i * 2)
             
             with self.term.location(0, cursor_y):
-                print("  " * self.term.width, end='')
+                print("  " * self.term.width, end='') # Clears the menu item before reprinting to prevent duplication bug
                 
                 with self.term.location(0, cursor_y):
                     if i == self.selected_index:
