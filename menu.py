@@ -1,4 +1,5 @@
 from blessed import Terminal
+import time
 from art import TITLE_ASCII
 from config import VERSION
 from util import get_colors
@@ -19,10 +20,10 @@ class MainMenu:
         
         for line in TITLE_ASCII.splitlines():
             print(self.term.center(''.join(
-            f"{opaque_color}{char}{self.term.normal}" if char in self.OPAQUE_BLOCKS else
-            f"{translucent_color}{char}{self.term.normal}" if char in self.TRANSLUCENT_BLOCKS else char
-            for char in line
-        )))
+                f"{opaque_color}{char}{self.term.normal}" if char in self.OPAQUE_BLOCKS else
+                f"{translucent_color}{char}{self.term.normal}" if char in self.TRANSLUCENT_BLOCKS else char
+                for char in line
+            )))
         
         self.display_version()
     
@@ -47,13 +48,30 @@ class MainMenu:
                     else:
                         print(self.term.center(option), end='')
     
-    def get_selection(self):
+    def display_message(self, message):
+        for i in range(len(self.MENU_OPTIONS) * 2 + 2):
+            with self.term.location(0, self.menu_start_y + i):
+                print(" " * self.term.width, end='')
+        
+        with self.term.location(0, self.menu_start_y + 2):
+            print(self.term.center(message), end='')
+        
+        with self.term.location(0, self.menu_start_y + 4):
+            print(self.term.center("Press any key to continue."), end='')
+        
+        with self.term.cbreak():
+            self.term.inkey()
+    
+    def get_selection(self, show_title=True):
         with self.term.cbreak(), self.term.hidden_cursor():
-            self.display_title()
+            if show_title:
+                self.display_title()
             
             while True:
                 self.display_menu()
-                key = self.term.inkey(0.1)
+                
+                with self.term.cbreak():
+                    key = self.term.inkey()
                 
                 if key.code == self.term.KEY_UP:
                     self.selected_index = (self.selected_index - 1) % len(self.MENU_OPTIONS)
