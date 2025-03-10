@@ -1,9 +1,11 @@
 from blessed import Terminal
 import os
-from src.config.config import SAVE_DIR
-from src.menu.menu import MainMenu
-from src.player.player import Player
+import sys
+from config.config import SAVE_DIR
+from menu.menu import MainMenu
+from player.player import Player
 
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "src")))
 
 def main():
     first_run = True

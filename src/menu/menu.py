@@ -1,8 +1,8 @@
 from blessed import Terminal
 import time
-from src.art.title import TITLE_ASCII
-from src.config.config import VERSION
-from src.util.util import get_colors
+from art.title import TITLE_ASCII
+from config.config import VERSION
+from util.util import get_colors
 
 class MainMenu:
     MENU_OPTIONS = ["Continue", "New Game", "Credits", "Exit"]
