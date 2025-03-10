@@ -21,7 +21,7 @@ class Player:
         Red if HP < 20%
         '''
         hp_color = self.term.green if hp_ratio >= 0.7 else self.term.yellow if hp_ratio >= 0.4 else self.term.orange if hp_ratio >= 0.2 else self.term.red
-        hp_bar = f"[{hp_color}{'█' * filled_segments}{self.term.normal}{' ' * empty_segments}]"
+        hp_bar = f"[{hp_color}{'█' * filled_segments}{self.term.normal}{'▒' * empty_segments}]"
         hp_text = f"{self.curr_hp}/{self.max_hp}"
         
         return f"[{self.level}] {self.name}\n{hp_bar} {hp_text}"

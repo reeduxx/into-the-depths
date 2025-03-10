@@ -1,8 +1,8 @@
 from blessed import Terminal
 import os
-from config import SAVE_DIR
-from menu import MainMenu
-from player import Player
+from src.config.config import SAVE_DIR
+from src.menu.menu import MainMenu
+from src.player.player import Player
 
 
 def main():
