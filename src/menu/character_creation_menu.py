@@ -26,10 +26,25 @@ class CharacterCreationMenu:
         with self.term.cbreak(), self.term.hidden_cursor():
             print(self.term.home + self.term.clear)
             self.display_title()
+            input_box_width = self.max_name_length + 10
+            box_x = (self.term.width - input_box_width) // 2
+            box_y = self.menu_start_y - 2
             
             while True:
-                with self.term.location(0, self.menu_start_y):
-                    print(self.term.center(f"Name: {self.name}{'_' * (self.max_name_length - len(self.name))}"), end='')
+                with self.term.location(box_x, box_y):
+                    print(f"╒{'═' * (input_box_width - 2)}╕")
+                
+                with self.term.location(box_x, box_y + 1):
+                    print(f"│{' ' * (input_box_width - 2)}│")
+                
+                with self.term.location(box_x, box_y + 2):
+                    print(f"│ Name: {self.name}{'_' * (self.max_name_length - len(self.name))} │")
+                
+                with self.term.location(box_x, box_y + 3):
+                    print(f"│{' ' * (input_box_width - 2)}│")
+                
+                with self.term.location(box_x, box_y + 4):
+                    print(f"╘{'═' * (input_box_width - 2)}╛")
                 
                 key = self.term.inkey()
                 

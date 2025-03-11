@@ -5,7 +5,7 @@ from config.config import VERSION
 from util.util import get_colors
 
 class MainMenu:
-    MENU_OPTIONS = ["Continue", "New Game", "Credits", "Exit"]
+    MENU_OPTIONS = ["Continue", "New Game", "Credits ", "Exit"]
     OPAQUE_BLOCKS = {'█', '▌', '▀', '▄'}
     TRANSLUCENT_BLOCKS = {'▓', '▒', '░'}
     
@@ -32,22 +32,70 @@ class MainMenu:
         
         with self.term.location(self.term.width - len(version_text) - 1, self.term.height - 1):
             print(version_text)
-    
+    '''
     def display_menu(self):
-        print('\n')
+        menu_width = max(len(option) for option in self.MENU_OPTIONS) + 6
+        menu_height = len(self.MENU_OPTIONS) * 2 + 2
+        box_x = (self.term.width - menu_width) // 2
+        box_y = self.menu_start_y - 2
+        
+        with self.term.location(box_x, box_y):
+            print(f"╒{'═' * (menu_width - 2)}╕")
         
         for i, option in enumerate(self.MENU_OPTIONS):
             cursor_y = self.menu_start_y + (i * 2)
+            left_padding = (menu_width - len(option) - 2) // 2
+            right_padding = menu_width - len(option) - 2 - left_padding
             
             with self.term.location(0, cursor_y):
                 print(' ', end='') # Clears the menu item before reprinting to prevent duplication bug
                 
                 with self.term.location(0, cursor_y):
                     if i == self.selected_index:
-                        print(self.term.center(self.term.reverse + option + self.term.normal), end='')
+                        print(self.term.center(f"│{' ' * left_padding}{self.term.reverse}{option}{self.term.normal}{' ' * right_padding}│"))
                     else:
-                        print(self.term.center(option), end='')
-    
+                        print(self.term.center(f"│{' ' * left_padding}{option}{' ' * right_padding}│"))
+        
+        with self.term.location(box_x, cursor_y + 2):
+            print(f"╘{'═' * (menu_width - 2)}╛")
+    '''
+    def display_menu(self):
+        menu_width = max(len(option) for option in self.MENU_OPTIONS) + 6  # Adds padding
+        menu_height = len(self.MENU_OPTIONS) * 2 + 2  # Calculates required height
+        box_x = (self.term.width - menu_width) // 2  # Centers the box horizontally
+        box_y = self.menu_start_y - 2  # Positions above first option
+
+    # Draw top border
+        with self.term.location(box_x, box_y):
+            print(f"╒{'═' * (menu_width - 2)}╕")
+        
+        with self.term.location(box_x, box_y + 1):
+            print(f"│{' ' * (menu_width - 2)}│")
+
+    # Draw menu options with side borders
+        for i in range(len(self.MENU_OPTIONS) * 2):
+            cursor_y = self.menu_start_y + i
+            
+            if i % 2 == 1:
+                with self.term.location(box_x, cursor_y):
+                    print(f"│{' ' * (menu_width - 2)}│")
+            else:
+                option_index = i // 2
+                option = self.MENU_OPTIONS[option_index]
+                left_padding = (menu_width - len(option) - 2) // 2  # Adjust for side borders
+                right_padding = menu_width - len(option) - 2 - left_padding  # Ensures even spacing
+
+                with self.term.location(box_x, cursor_y):
+                    if option_index == self.selected_index:
+                        option_text = f"│{' ' * left_padding}{self.term.reverse}{option}{self.term.normal}{' ' * right_padding}│"
+                    else:
+                        option_text = f"│{' ' * left_padding}{option}{' ' * right_padding}│"
+
+                    print(option_text)
+
+        with self.term.location(box_x, cursor_y + 1):
+            print(f"╘{'═' * (menu_width - 2)}╛")
+
     def display_message(self, message):
         blinking = True
         start_time = time.time()
