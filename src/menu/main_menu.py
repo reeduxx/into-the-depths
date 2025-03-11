@@ -1,6 +1,6 @@
 from blessed import Terminal
 import time
-from art.title import TITLE_ASCII
+from art.art import TITLE_ASCII
 from config.config import VERSION
 from util.util import get_colors
 
@@ -21,8 +21,8 @@ class MainMenu:
         for line in TITLE_ASCII.splitlines():
             print(self.term.center(''.join(
                 f"{opaque_color}{char}{self.term.normal}" if char in self.OPAQUE_BLOCKS else
-                f"{translucent_color}{char}{self.term.normal}" if char in self.TRANSLUCENT_BLOCKS else char
-                for char in line
+                f"{translucent_color}{char}{self.term.normal}" if char in self.TRANSLUCENT_BLOCKS else 
+                char for char in line
             )))
         
         self.display_version()

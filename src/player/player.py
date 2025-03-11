@@ -1,12 +1,14 @@
 from blessed import Terminal
 
 class Player:
-    def __init__(self, name, term):
+    def __init__(self, name, term, stats=[]):
         self.term = term
         self.name = name
         self.level = 1
         self.exp = 0
-        self.curr_hp = self.max_hp = 100
+        self.max_hp = 10
+        self.curr_hp = self.max_hp
+        self.stats = stats
 	
     def __str__(self):
         hp_segments = 10 # HP bar represented by 10 blocks
