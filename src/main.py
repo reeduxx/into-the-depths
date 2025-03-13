@@ -25,7 +25,7 @@ def main():
         
         if option == 1:
             character_creation_menu = CharacterCreationMenu(term)
-            name = character_creation_menu.display_menu()
+            name = character_creation_menu.get_input()
             player = Player(name, term)
             print(player)
             first_run = True
