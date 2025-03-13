@@ -5,7 +5,7 @@ A text-based roguelike developed with Python
 # Installation & Running
 ## Requirements
 - Python 3.x
-- blessed module
+- `blessed` module
 
 ## Steps
 ### Step 1: Clone the repository
