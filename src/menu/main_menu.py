@@ -15,6 +15,8 @@ class MainMenu:
         self.menu_max_y = 14
         self.menu_width = max(len(option) for option in self.MENU_OPTIONS) + 6
         self.menu_height = len(self.MENU_OPTIONS) * 2 + 2
+        self.window_width = self.term.width
+        self.window_height = self.term.height
     
     def display_title(self):
         opaque_color, translucent_color = get_colors(self.term)
@@ -82,23 +84,36 @@ class MainMenu:
     
     def display_message(self, message):
         self.clear_menu()
-        message_start_y = max(self.menu_max_y, (self.term.height - 3) // 2)
         
-        with self.term.location(0, message_start_y):
-            print(self.term.center(message), end='')
-        
-        with self.term.location(0, message_start_y + 2):
-            print(self.term.center("Press any key to continue. . ."), end='')
-        
-        with self.term.cbreak():
-            self.term.inkey()
-        
+        while True:
+            with self.term.cbreak(), self.term.hidden_cursor():
+                message_start_y = max(self.menu_max_y, (self.term.height - 3) // 2)
+            
+                if self.window_resized():
+                    self.display_title()
+                
+                with self.term.location(0, message_start_y):
+                    print(self.term.center(message), end='')
+                    
+                with self.term.location(0, message_start_y + 2):
+                    print(self.term.center("Press any key to continue. . ."), end='')
+                    
+                key = self.term.inkey(timeout=0.1)
+                    
+                if key:
+                    break
+                
         self.clear_menu()
+    
+    def window_resized(self):
+        if self.term.width != self.window_width or self.term.height != self.window_height:
+            self.window_width, self.window_height = self.term.width, self.term.height
+            return True
+        
+        return False
     
     def get_selection(self, show_title=True):
         with self.term.cbreak(), self.term.hidden_cursor():
-            prev_width, prev_height = self.term.width, self.term.height
-            
             if show_title:
                 self.display_title()
             
@@ -108,8 +123,7 @@ class MainMenu:
             }
             
             while True:
-                if self.term.width != prev_width or self.term.height != prev_height:
-                    prev_width, prev_height = self.term.width, self.term.height
+                if self.window_resized():
                     self.display_title()
                 
                 self.display_menu()

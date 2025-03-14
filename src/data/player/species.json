@@ -1,0 +1,22 @@
+[
+	{
+		"name": "Dwarf",
+		"description": "TODO",
+		"passives": []
+	},
+	{
+		"name": "Elf",
+		"description": "TODO",
+		"passives": []
+	},
+	{
+		"name": "Human",
+		"description": "TODO",
+		"passives": []
+	},
+	{
+		"name": "Orc",
+		"description": "TODO",
+		"passives": []
+	}
+]
