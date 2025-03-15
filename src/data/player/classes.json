@@ -1,0 +1,44 @@
+[
+	{
+		"name": "Berserker",
+		"description": "TODO",
+		"stats": {
+			"STR": [5, 8]
+		}
+	},
+	{
+		"name": "Ranger",
+		"description": "TODO",
+		"stats": {
+			"DEX": [5, 8]
+		}
+	},
+	{
+		"name": "Paladin",
+		"description": "TODO",
+		"stats": {
+			"CON": [5, 8]
+		}
+	},
+	{
+		"name": "Warlock",
+		"description": "TODO",
+		"stats": {
+			"INT": [5, 8]
+		}
+	},
+	{
+		"name": "Rogue",
+		"description": "TODO",
+		"stats": {
+			"WIS": [5, 8]
+		}
+	},
+	{
+		"name": "Merchant",
+		"description": "TODO",
+		"stats": {
+			"CHA": [5, 8]
+		}
+	}
+]

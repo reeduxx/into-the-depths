@@ -1,22 +1,37 @@
 [
 	{
+		"name": "Druid",
+		"description": "TODO",
+		"innates": ["TODO", "FOO", "BAR"]
+	},
+	{
 		"name": "Dwarf",
 		"description": "TODO",
-		"passives": []
+		"innates": ["TODO", "FOO", "BAR"]
 	},
 	{
 		"name": "Elf",
 		"description": "TODO",
-		"passives": []
+		"innates": ["TODO", "FOO", "BAR"]
+	},
+	{
+		"name": "Half-Giant",
+		"description": "TODO",
+		"innates": ["TODO", "FOO", "BAR"]
 	},
 	{
 		"name": "Human",
 		"description": "TODO",
-		"passives": []
+		"innates": ["TODO", "FOO", "BAR"]
+	},
+	{
+		"name": "Night Elf",
+		"description": "TODO",
+		"innates": ["TODO", "FOO", "BAR"]
 	},
 	{
 		"name": "Orc",
 		"description": "TODO",
-		"passives": []
+		"innates": ["TODO", "FOO", "BAR"]
 	}
 ]
