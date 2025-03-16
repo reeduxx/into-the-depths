@@ -14,7 +14,7 @@ class CharacterCreationMenu:
         self.selected_index = 0
         self.name = ""
         self.menu_start_y = 14
-        self.species_list = load_json("player", "species.json")
+        self.species_data = load_json("player", "species.json")
         self.selected_species_index = 0
         self.name_complete = False
         self.species_class_complete = False
@@ -88,7 +88,7 @@ class CharacterCreationMenu:
             print(f"{box_color}╘{'═' * (input_box_width - 2)}╛")
     '''
     def display_species_class_input_box(self):
-        species = Species(self.species_list[self.selected_species_index])
+        species = Species(self.species_data[self.selected_species_index])
         input_box_width = (self.term.width // 2) - 1
         padding = (input_box_width - len(species.name) - 2) // 2
         extra_padding = (input_box_width - len(species.name) - 2) % 2

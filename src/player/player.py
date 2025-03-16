@@ -1,11 +1,11 @@
 from blessed import Terminal
 
 class Player:
-    def __init__(self, name, species, passive, term, stats=[]):
+    def __init__(self, name, species, innate, term, stats=[]):
         self.term = term
         self.name = name
         self.species = species
-        self.passive = passive
+        self.innate = innate
         self.level = 1
         self.exp = 0
         self.max_hp = 10
