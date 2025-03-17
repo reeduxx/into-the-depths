@@ -1,45 +1,51 @@
 from blessed import Terminal
+import os
+import sys
 import time
 from art.art import TITLE_ASCII
-from config.config import VERSION
+from config.config import SAVE_DIR, VERSION
+from menu.character_creation_menu import CharacterCreationMenu
+from menu.menu import Menu
+from player.player import Player
 from util.util import get_colors
 
-class MainMenu:
+class MainMenu(Menu):
     MENU_OPTIONS = ["Continue", "New Game", "Credits ", "Exit"]
-    OPAQUE_BLOCKS = {'█', '▌', '▀', '▄'}
-    TRANSLUCENT_BLOCKS = {'▓', '▒', '░'}
     
     def __init__(self, term):
-        self.term = term
+        super().__init__(term)
         self.selected_index = 0
+        self.first_run = True
         self.menu_max_y = 14
         self.menu_width = max(len(option) for option in self.MENU_OPTIONS) + 6
         self.menu_height = len(self.MENU_OPTIONS) * 2 + 2
-        self.window_width = self.term.width
-        self.window_height = self.term.height
     
-    def display_title(self):
-        opaque_color, translucent_color = get_colors(self.term)
-        print(self.term.home + self.term.clear)
+    def run(self):
+        sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "src")))
         
-        for line in TITLE_ASCII.splitlines():
-            print(self.term.center(''.join(
-                f"{opaque_color}{char}{self.term.normal}" if char in self.OPAQUE_BLOCKS else
-                f"{translucent_color}{char}{self.term.normal}" if char in self.TRANSLUCENT_BLOCKS else 
-                char for char in line
-            )))
-        
-        self.display_version()
-    
-    def display_version(self):
-        version_text = f"v{VERSION}"
-        
-        with self.term.location(self.term.width - len(version_text) - 1, self.term.height - 1):
-            print(version_text)
+        while True:
+            option = self.get_selection(self.first_run)
+            self.first_run = False
+            
+            match option:
+                case 0:
+                    if not os.listdir(SAVE_DIR):
+                        self.display_message("No saves found.")
+                    else:
+                        print("Continue") # TODO: Implement save loading
+                case 1:
+                    character_creation_menu = CharacterCreationMenu(self.term)
+                    name = character_creation_menu.get_input()
+                    player = Player(name, self.term)
+                    print(player)
+                    self.first_run = True
+                case 2:
+                    print("Credits") # TODO: Implement credits screen
+                case 3:
+                    break
     
     def get_menu_y(self):
         box_start_y = (self.term.height - self.menu_height) // 2
-        
         return max(self.menu_max_y, box_start_y)
     
     def display_menu(self):
@@ -75,15 +81,8 @@ class MainMenu:
         with self.term.location(box_x, cursor_y + 1):
             print(f"╘{'═' * (self.menu_width - 2)}╛")
     
-    def clear_menu(self):
-        menu_start_y = self.get_menu_y()
-        
-        for i in range(self.menu_height + 3):
-            with self.term.location(0, (menu_start_y - 2) + i):
-                print(' ' * self.term.width, end='')
-    
     def display_message(self, message):
-        self.clear_menu()
+        self.clear_menu(self.get_menu_y(), self.menu_height)
         with self.term.cbreak(), self.term.hidden_cursor():
             while True:
                 message_start_y = max(self.menu_max_y, (self.term.height - 3) // 2)
@@ -102,19 +101,12 @@ class MainMenu:
                 if key:
                     break
                 
-        self.clear_menu()
-    
-    def window_resized(self):
-        if self.term.width != self.window_width or self.term.height != self.window_height:
-            self.window_width, self.window_height = self.term.width, self.term.height
-            return True
-        
-        return False
+        self.clear_menu(self.get_menu_y(), self.menu_height)
     
     def get_selection(self, show_title=True):
         with self.term.cbreak(), self.term.hidden_cursor():
             if show_title:
-                self.display_title()
+                self.display_title(TITLE_ASCII)
             
             key_map = {
                 self.term.KEY_UP: lambda: setattr(self, 'selected_index', (self.selected_index - 1) % len(self.MENU_OPTIONS)),
@@ -123,7 +115,7 @@ class MainMenu:
             
             while True:
                 if self.window_resized():
-                    self.display_title()
+                    self.display_title(TITLE_ASCII)
                 
                 self.display_menu()
                 key = self.term.inkey(timeout=0.1)

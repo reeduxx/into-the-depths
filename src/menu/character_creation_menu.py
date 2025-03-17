@@ -1,35 +1,28 @@
 import textwrap
 from art.art import CREATE_ASCII
+from menu.menu import Menu
 from player.character.species import Species
+from player.character.species_generator import SpeciesGenerator
 from util.json_loader import load_json
 from util.util import get_colors
 
-class CharacterCreationMenu:
-    OPAQUE_BLOCKS = {'█', '▌', '▀', '▄'}
-    TRANSLUCENT_BLOCKS = {'▓', '▒', '░'}
-    
+class CharacterCreationMenu(Menu):
     def __init__(self, term):
-        self.term = term
+        super().__init__(term)
         self.max_name_length = 16
-        self.selected_index = 0
         self.name = ""
         self.menu_start_y = 14
         self.species_data = load_json("player", "species.json")
+        self.species_generator = SpeciesGenerator(self.species_data)
         self.selected_species_index = 0
+        self.selected_species = self.species_generator.generate(self.selected_species_index)
         self.name_complete = False
-        self.species_class_complete = False
+        self.species_complete = False
+        self.class_complete = False
         self.stats_complete = False
     
-    def display_title(self):
-        opaque_color, translucent_color = get_colors(self.term)
-        print(self.term.home + self.term.clear)
-        
-        for line in CREATE_ASCII.splitlines():
-            print(self.term.center(''.join(
-            f"{opaque_color}{char}{self.term.normal}" if char in self.OPAQUE_BLOCKS else
-            f"{translucent_color}{char}{self.term.normal}" if char in self.TRANSLUCENT_BLOCKS else
-            char for char in line
-        )))
+    def update_species(self):
+        self.selected_species = self.species_generator.generate(self.selected_species_index)
     
     def display_name_input_box(self):
         input_box_width = self.max_name_length + 10
@@ -54,49 +47,18 @@ class CharacterCreationMenu:
         
         with self.term.location(box_x, box_y + 4):
             print(f"{box_color}╘{'═' * (input_box_width - 2)}╛")
-    '''
-    def display_species_class_input_box(self):
-        species = self.species_list[self.selected_species_index]
+
+    def display_species_input_box(self):
+        species = self.selected_species
         input_box_width = (self.term.width // 2) - 1
-        padding = (input_box_width - len(species["name"]) - 2) // 2
-        extra_padding = (input_box_width - len(species["name"]) - 2) % 2
-        box_x = 1
-        box_top_y = self.menu_start_y + 3
-        box_bottom_y = self.term.height - 2
-        box_color = self.term.darkgray if (self.species_class_complete or not self.name_complete) else self.term.normal
-        
-        with self.term.location(box_x, box_top_y):
-            print(f"{box_color}╒{'═' * (input_box_width - 2)}╕")
-        
-        with self.term.location(box_x, box_top_y + 1):
-            print(f"{box_color}│{' ' * (input_box_width - 2)}│")
-        
-        with self.term.location(box_x, box_top_y + 2):
-            print(f"{box_color}│{' ' * padding}{species["name"]}{' ' * (padding + extra_padding)}│")
-        
-        for y in range(box_top_y + 3, box_bottom_y - 1):
-            with self.term.location(box_x, y):
-                print(f"{box_color}│{' ' * (input_box_width - 2)}│")
-        
-        with self.term.location(box_x, box_bottom_y - 1):
-            if not self.species_class_complete:
-                print(f"{box_color}│{' ' * ((input_box_width - 38) // 2)}[←] Prev | [Enter] Select | [→] Next {' ' * ((input_box_width - 38) // 2)}│")
-            else:
-                print(f"{box_color}│{' ' * (input_box_width - 2)}│")
-        
-        with self.term.location(box_x, box_bottom_y):
-            print(f"{box_color}╘{'═' * (input_box_width - 2)}╛")
-    '''
-    def display_species_class_input_box(self):
-        species = Species(self.species_data[self.selected_species_index])
-        input_box_width = (self.term.width // 2) - 1
+        input_box_height = (self.term.height - self.menu_start_y - 5) // 2
         padding = (input_box_width - len(species.name) - 2) // 2
         extra_padding = (input_box_width - len(species.name) - 2) % 2
         box_x = 1
         box_top_y = self.menu_start_y + 3
-        box_bottom_y = self.term.height - 2
-        box_color = self.term.darkgray if (self.species_class_complete or not self.name_complete) else self.term.normal
-        species_text = str(species).split('\n')
+        box_bottom_y = box_top_y + input_box_height - 1
+        box_color = self.term.darkgray if (self.species_complete or not self.name_complete) else self.term.normal
+        species_text = str(species.__str__(input_box_width - 4)).split('\n')
 
         with self.term.location(box_x, box_top_y):
             print(f"{box_color}╒{'═' * (input_box_width - 2)}╕")
@@ -119,25 +81,53 @@ class CharacterCreationMenu:
                 print(f"{box_color}│{' ' * (input_box_width - 2)}│")
         
         with self.term.location(box_x, box_bottom_y - 1):
-            if not self.species_class_complete:
+            if not self.species_complete:
                 print(f"{box_color}│{' ' * ((input_box_width - 38) // 2)}[←] Prev | [Enter] Select | [→] Next {' ' * ((input_box_width - 38) // 2)}│")
             else:
                 print(f"{box_color}│{' ' * (input_box_width - 2)}│")
         
         with self.term.location(box_x, box_bottom_y):
             print(f"{box_color}╘{'═' * (input_box_width - 2)}╛")
-
+    
+    def display_class_input_box(self):
+        input_box_width = (self.term.width // 2) - 1
+        input_box_height = (self.term.height - self.menu_start_y - 5) // 2
+        box_x = 1
+        box_top_y = self.menu_start_y + input_box_height + 3
+        box_bottom_y = self.term.height - 2
+        box_color = self.term.darkgray if (self.class_complete or not self.species_complete) else self.term.normal
+        
+        with self.term.location(box_x, box_top_y):
+            print(f"{box_color}╒{'═' * (input_box_width - 2)}╕")
+        
+        for y in range(box_top_y + 1, box_bottom_y - 1):
+            with self.term.location(box_x, y):
+                print(f"{box_color}│{' ' * (input_box_width - 2)}│")
+        
+        with self.term.location(box_x, box_bottom_y - 1):
+            if not self.class_complete:
+                print(f"{box_color}│{' ' * ((input_box_width - 38) // 2)}[←] Prev | [Enter] Select | [→] Next {' ' * ((input_box_width - 38) // 2)}│")
+            else:
+                print(f"{box_color}│{' ' * (input_box_width - 2)}│")
+        
+        with self.term.location(box_x, box_bottom_y):
+            print(f"{box_color}╘{'═' * (input_box_width - 2)}╛")
+    
     def display_stats_input_box(self):
         input_box_width = (self.term.width // 2) - 2
         box_x = (self.term.width // 2) + 1
         box_top_y = self.menu_start_y + 3
         box_bottom_y = self.term.height - 2
-        box_color = self.term.darkgray if (self.stats_complete or not self.species_class_complete) else self.term.normal
+        box_color = self.term.darkgray if (self.stats_complete or not self.class_complete) else self.term.normal
         
         with self.term.location(box_x, box_top_y):
             print(f"{box_color}╒{'═' * (input_box_width - 2)}╕")
         
-        for y in range(box_top_y + 1, box_bottom_y):
+        with self.term.location(box_x, box_top_y + 1):
+            padding = (input_box_width - 2) // 2 - 2
+            print(f"{box_color}│{' ' * padding}{self.term.underline}Stats{self.term.normal}{' ' * (padding - 1)}│")
+        
+        for y in range(box_top_y + 2, box_bottom_y):
             with self.term.location(box_x, y):
                 print(f"{box_color}│{' ' * (input_box_width - 2)}│")
         
@@ -154,13 +144,18 @@ class CharacterCreationMenu:
                 self.name = self.name[:-1]
             elif key.isalnum() and len(self.name) < self.max_name_length:
                 self.name += key
-        elif not self.species_class_complete:
+        elif not self.species_complete:
             if key.code == self.term.KEY_LEFT:
-                self.selected_species_index = (self.selected_species_index - 1) % 4
+                self.selected_species_index = (self.selected_species_index - 1) % 7
+                self.update_species()
             elif key.code == self.term.KEY_RIGHT:
-                self.selected_species_index = (self.selected_species_index + 1) % 4
+                self.selected_species_index = (self.selected_species_index + 1) % 7
+                self.update_species()
             elif key.code == self.term.KEY_ENTER:
-                self.species_class_complete = True
+                self.species_complete = True
+        elif not self.class_complete:
+            if key.code == self.term.KEY_ENTER:
+                self.class_complete = True
         elif not self.stats_complete:
             if key.code == self.term.KEY_ENTER:
                 self.stats_complete = True
@@ -169,8 +164,10 @@ class CharacterCreationMenu:
             if key.code == self.term.KEY_ESCAPE:
                 if self.stats_complete:
                     self.stats_complete = False
-                elif self.species_class_complete:
-                    self.species_class_complete = False
+                elif self.class_complete:
+                    self.class_complete = False
+                elif self.species_complete:
+                    self.species_complete = False
                 elif self.name_complete:
                     self.name_complete = False
         
@@ -179,15 +176,16 @@ class CharacterCreationMenu:
     def get_input(self):
         with self.term.cbreak(), self.term.hidden_cursor():
             prev_width, prev_height = self.term.width, self.term.height
-            self.display_title()
+            self.display_title(CREATE_ASCII, version=False)
             
             while True:
                 if self.term.width != prev_width or self.term.height != prev_height:
                     prev_width, prev_height = self.term.width, self.term.height
-                    self.display_title()
+                    self.display_title(CREATE_ASCII, version=False)
                     
                 self.display_name_input_box()
-                self.display_species_class_input_box()
+                self.display_species_input_box()
+                self.display_class_input_box()
                 self.display_stats_input_box()
                 
                 if not self.handle_input():

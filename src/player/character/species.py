@@ -1,15 +1,11 @@
-import random
-from player.character.innate import Innate
-from util.json_loader import load_json
+import textwrap
 
 class Species:
-    def __init__(self, data):
-        self.name = data["name"]
-        self.description = data["description"]
-        self.innate = self.generate_innate(data["innates"])
+    def __init__(self, species_data, innate):
+        self.name = species_data["name"]
+        self.description = species_data["description"]
+        self.innate = innate
     
-    def generate_innate(self, innates):
-        return Innate(random.choice(innates), "TODO")
-    
-    def __str__(self):
-        return f"{self.name}\n{self.description}\n{self.innate}"
+    def __str__(self, wrap_width):
+        wrapped_description = '\n'.join(textwrap.fill(self.description, width=wrap_width).split('\n'))
+        return f"{self.name}\n{wrapped_description}\n{self.innate}"

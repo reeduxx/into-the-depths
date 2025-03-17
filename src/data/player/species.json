@@ -1,7 +1,7 @@
 [
 	{
 		"name": "Druid",
-		"description": "TODO",
+		"description": "Mystical shapeshifters attuned to nature, Druids harness the power of the wild to heal, protect, and transform.",
 		"innates": ["TODO", "FOO", "BAR"]
 	},
 	{
@@ -11,6 +11,11 @@
 	},
 	{
 		"name": "Elf",
+		"description": "TODO",
+		"innates": ["TODO", "FOO", "BAR"]
+	},
+	{
+		"name": "Gnome",
 		"description": "TODO",
 		"innates": ["TODO", "FOO", "BAR"]
 	},
