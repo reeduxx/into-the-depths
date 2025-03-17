@@ -84,9 +84,8 @@ class MainMenu:
     
     def display_message(self, message):
         self.clear_menu()
-        
-        while True:
-            with self.term.cbreak(), self.term.hidden_cursor():
+        with self.term.cbreak(), self.term.hidden_cursor():
+            while True:
                 message_start_y = max(self.menu_max_y, (self.term.height - 3) // 2)
             
                 if self.window_resized():

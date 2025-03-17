@@ -111,12 +111,19 @@ class CharacterCreationMenu:
                 if i == 0:
                     print(f"{box_color}│{' ' * padding}{self.term.underline}{line}{self.term.normal}{' ' * (padding + extra_padding)}│")
                 else:
-                    print(f"{box_color}│ {line}│")
+                    padding = input_box_width - len(line) - 3
+                    print(f"{box_color}│ {line}{' ' * padding}│")
             
         for y in range(box_top_y + 2 + len(species_text), box_bottom_y - 1):
             with self.term.location(box_x, y):
                 print(f"{box_color}│{' ' * (input_box_width - 2)}│")
-
+        
+        with self.term.location(box_x, box_bottom_y - 1):
+            if not self.species_class_complete:
+                print(f"{box_color}│{' ' * ((input_box_width - 38) // 2)}[←] Prev | [Enter] Select | [→] Next {' ' * ((input_box_width - 38) // 2)}│")
+            else:
+                print(f"{box_color}│{' ' * (input_box_width - 2)}│")
+        
         with self.term.location(box_x, box_bottom_y):
             print(f"{box_color}╘{'═' * (input_box_width - 2)}╛")
 
