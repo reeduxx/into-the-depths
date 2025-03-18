@@ -1,7 +1,7 @@
 [
 	{
-		"name": "Druid",
-		"description": "Mystical shapeshifters attuned to nature, Druids harness the power of the wild to heal, protect, and transform.",
+		"name": "Drakari",
+		"description": "TODO",
 		"innates": ["TODO", "FOO", "BAR"]
 	},
 	{
@@ -10,7 +10,7 @@
 		"innates": ["TODO", "FOO", "BAR"]
 	},
 	{
-		"name": "Elf",
+		"name": "High Elf",
 		"description": "TODO",
 		"innates": ["TODO", "FOO", "BAR"]
 	},
@@ -25,7 +25,17 @@
 		"innates": ["TODO", "FOO", "BAR"]
 	},
 	{
+		"name": "Hellkin",
+		"description": "TODO",
+		"innates": ["TODO", "FOO", "BAR"]
+	},
+	{
 		"name": "Human",
+		"description": "TODO",
+		"innates": ["TODO", "FOO", "BAR"]
+	},
+	{
+		"name": "Myconid",
 		"description": "TODO",
 		"innates": ["TODO", "FOO", "BAR"]
 	},
@@ -36,6 +46,21 @@
 	},
 	{
 		"name": "Orc",
+		"description": "TODO",
+		"innates": ["TODO", "FOO", "BAR"]
+	},
+	{
+		"name": "Revenant",
+		"description": "TODO",
+		"innates": ["TODO", "FOO", "BAR"]
+	},
+	{
+		"name": "Voidborn",
+		"description": "TODO",
+		"innates": ["TODO", "FOO", "BAR"]
+	},
+	{
+		"name": "Wood Elf",
 		"description": "TODO",
 		"innates": ["TODO", "FOO", "BAR"]
 	}

@@ -1,2 +1,17 @@
 [
+	{
+		"name": "TODO",
+		"description": "TODO",
+		"effect": 0
+	},
+	{
+		"name": "FOO",
+		"description": "FOO",
+		"effect": 0
+	},
+	{
+		"name": "BAR",
+		"description": "BAR",
+		"effect": 0
+	}
 ]

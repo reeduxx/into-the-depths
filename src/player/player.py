@@ -1,7 +1,7 @@
 from blessed import Terminal
 
 class Player:
-    def __init__(self, name, species, innate, cls, term, stats=[]):
+    def __init__(self, name, species, cls, term, stats=[]):
         self.term = term
         self.name = name
         self.species = species
@@ -29,4 +29,4 @@ class Player:
         hp_bar = f"[{hp_color}{'█' * filled_segments}{self.term.normal}{'▒' * empty_segments}]"
         hp_text = f"{self.curr_hp}/{self.max_hp}"
         
-        return f"[{self.level} {self.species} {self.cls}] {self.name}\n{hp_bar} {hp_text}"
+        return f"{self.name}, Lvl {self.level} {self.species.name} {self.cls.name}\n{hp_bar} {hp_text}"
