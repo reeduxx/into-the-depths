@@ -4,11 +4,12 @@ from menu.menu import Menu
 from player.character.class_generator import ClassGenerator
 from player.character.species import Species
 from player.character.species_generator import SpeciesGenerator
+from player.character.stats_generator import StatsGenerator
 from util.json_loader import load_json
 from util.util import get_colors
 
 class CharacterCreationMenu(Menu):
-    stats = ["STR", "DEX", "CON", "INT", "WIS", "CHA"]
+    stat_names = ["STR", "DEX", "CON", "INT", "WIS", "CHA"]
     
     def __init__(self, term):
         super().__init__(term)
@@ -23,6 +24,9 @@ class CharacterCreationMenu(Menu):
         self.class_generator = ClassGenerator(self.class_data)
         self.selected_class_index = 0
         self.selected_class = self.class_generator.generate(self.selected_class_index)
+        self.stats_generator = StatsGenerator(self.class_data)
+        self.stats = self.stats_generator.generate(self.selected_class_index)
+        self.selected_stat_index = 0
         self.name_complete = False
         self.species_complete = False
         self.class_complete = False
@@ -33,6 +37,7 @@ class CharacterCreationMenu(Menu):
     
     def update_class(self):
         self.selected_class = self.class_generator.generate(self.selected_class_index)
+        self.stats = self.stats_generator.generate(self.selected_class_index)
     
     def display_name_input_box(self):
         input_box_width = self.max_name_length + 10
@@ -81,7 +86,7 @@ class CharacterCreationMenu(Menu):
                 break
             with self.term.location(box_x, box_top_y + 2 + i):
                 if i == 0:
-                    print(f"{box_color}│{' ' * padding}{self.term.underline}{line}{self.term.normal}{' ' * (padding + extra_padding)}│")
+                    print(f"{box_color}│{' ' * padding}{self.term.underline}{line}{self.term.normal}{' ' * (padding + extra_padding)}{box_color}│")
                 else:
                     padding = input_box_width - len(line) - 3
                     print(f"{box_color}│ {line}{' ' * padding}│")
@@ -109,14 +114,25 @@ class CharacterCreationMenu(Menu):
         box_top_y = self.menu_start_y + input_box_height + 3
         box_bottom_y = self.term.height - 2
         box_color = self.term.darkgray if (self.class_complete or not self.species_complete) else self.term.normal
+        class_text = str(cls.__str__(input_box_width - 4)).split('\n')
         
         with self.term.location(box_x, box_top_y):
             print(f"{box_color}╒{'═' * (input_box_width - 2)}╕")
         
         with self.term.location(box_x, box_top_y + 1):
-            print(f"│{box_color}{' ' * padding}{self.term.underline}{cls.name}{self.term.normal}{' ' * (padding + extra_padding)}│")
+            print(f"{box_color}│{' ' * (input_box_width - 2)}│")
         
-        for y in range(box_top_y + 2, box_bottom_y - 1):
+        for i, line in enumerate(class_text):
+            if box_top_y + 2 + i >= box_bottom_y - 2:
+                break
+            with self.term.location(box_x, box_top_y + 2 + i):
+                if i == 0:
+                    print(f"{box_color}│{' ' * padding}{self.term.underline}{line}{self.term.normal}{' ' * (padding + extra_padding)}{box_color}│")
+                else:
+                    padding = input_box_width - len(line) - 3
+                    print(f"{box_color}│ {line}{' ' * padding}│")
+        
+        for y in range(box_top_y + 2 + len(class_text), box_bottom_y - 1):
             with self.term.location(box_x, y):
                 print(f"{box_color}│{' ' * (input_box_width - 2)}│")
         
@@ -143,9 +159,10 @@ class CharacterCreationMenu(Menu):
             padding = (input_box_width - 2) // 2 - 2
             print(f"{box_color}│{' ' * padding}{self.term.underline}Stats{self.term.normal}{' ' * (padding - 1)}│")
         
-        for y, stat in enumerate(self.stats):
+        for y, stat in enumerate(self.stat_names):
             with self.term.location(box_x, box_top_y + y + 2):
-                print(f"{box_color}│{stat}: {0:2}│")
+                padding = (input_box_width - 9) // 2
+                print(f"{box_color}│ {' ' * padding}{stat}: {self.stats[y]:2}{' ' * padding}│")
         
         for y in range(box_top_y + len(self.stats) + 2, box_bottom_y):
             with self.term.location(box_x, y):

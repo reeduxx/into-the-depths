@@ -6,6 +6,6 @@ class ClassGenerator:
         self.class_data = class_data
     
     def generate(self, class_index):
-        class_info = self.class_data[class_index]
+        cls = self.class_data[class_index]
         
-        return Class(class_info["name"])
+        return Class(cls)
