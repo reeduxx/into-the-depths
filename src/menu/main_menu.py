@@ -35,8 +35,8 @@ class MainMenu(Menu):
                         print("Continue") # TODO: Implement save loading
                 case 1:
                     character_creation_menu = CharacterCreationMenu(self.term)
-                    name, species, cls = character_creation_menu.get_input()
-                    player = Player(name, species, cls, self.term)
+                    player = Player(*character_creation_menu.get_input(), self.term)
+                    print(player)
                     self.first_run = True
                 case 2:
                     print("Credits") # TODO: Implement credits screen
