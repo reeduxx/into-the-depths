@@ -1,16 +1,15 @@
 from blessed import Terminal
-from menu.main_menu import MainMenu
-from dungeon.dungeon import generate_dungeon
+from client.util import load_ascii_art
 
 def main():
     term = Terminal()
-    menu = MainMenu(term)
-    menu.run()
     print(term.clear)
-    '''
-    dungeon = generate_dungeon(40, 25, min_size=6, drunken_walk_steps=20)
-    dungeon.print_dungeon()
-    '''
+    TITLE_ASCII = load_ascii_art("assets/title.txt")
+    
+    for line in TITLE_ASCII.splitlines():
+        print(term.center(f"{term.green}{line}{term.normal}"))
+
+    return 0
 
 if __name__ == '__main__':
-	main()
+    main()
