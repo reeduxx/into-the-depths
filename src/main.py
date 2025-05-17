@@ -1,7 +1,7 @@
 from blessed import Terminal
 from client.util import load_ascii_art
 
-def main():
+def main() -> None:
     term = Terminal()
     print(term.clear)
     TITLE_ASCII = load_ascii_art("assets/title.txt")

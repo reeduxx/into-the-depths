@@ -1,5 +1,22 @@
+# Python
 __pycache__/
-build/
-dist/
-build.bat
-*.spec
+*.py[cod]
+
+# Sphinx
+docs/_build/
+docs/build/
+docs/**/.doctrees/
+docs/**/html/
+
+# Virtual Environments
+.venv/
+env/
+venv/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/

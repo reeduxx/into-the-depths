@@ -12,6 +12,14 @@ common.constants module
    :show-inheritance:
    :undoc-members:
 
+common.rng module
+-----------------
+
+.. automodule:: common.rng
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
 Module contents
 ---------------
 
