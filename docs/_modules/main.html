@@ -71,16 +71,15 @@
   <h1>Source code for main</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span><span class="w"> </span><span class="nn">blessed</span><span class="w"> </span><span class="kn">import</span> <span class="n">Terminal</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">client.util</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_ascii_art</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">client.menu.main_menu</span><span class="w"> </span><span class="kn">import</span> <span class="n">MainMenu</span>
 
 <div class="viewcode-block" id="main">
 <a class="viewcode-back" href="../main.html#main.main">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="n">term</span> <span class="o">=</span> <span class="n">Terminal</span><span class="p">()</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">term</span><span class="o">.</span><span class="n">clear</span><span class="p">)</span>
-    <span class="n">TITLE_ASCII</span> <span class="o">=</span> <span class="n">load_ascii_art</span><span class="p">(</span><span class="s2">&quot;assets/title.txt&quot;</span><span class="p">)</span>
-    
-    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">TITLE_ASCII</span><span class="o">.</span><span class="n">splitlines</span><span class="p">():</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">term</span><span class="o">.</span><span class="n">center</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">term</span><span class="o">.</span><span class="n">green</span><span class="si">}{</span><span class="n">line</span><span class="si">}{</span><span class="n">term</span><span class="o">.</span><span class="n">normal</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">))</span>
+    <span class="n">main_menu</span> <span class="o">=</span> <span class="n">MainMenu</span><span class="p">(</span><span class="n">term</span><span class="p">)</span>
+    <span class="n">main_menu</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
 
     <span class="k">return</span> <span class="mi">0</span></div>
 

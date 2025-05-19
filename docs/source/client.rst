@@ -12,26 +12,17 @@ Subpackages
 Submodules
 ----------
 
-client.constants module
------------------------
+.. toctree::
+   :maxdepth: 4
 
-.. automodule:: client.constants
-   :members:
-   :show-inheritance:
-   :undoc-members:
-
-client.util module
-------------------
-
-.. automodule:: client.util
-   :members:
-   :show-inheritance:
-   :undoc-members:
+   client.constants
+   client.scene_manager
+   client.util
 
 Module contents
 ---------------
 
 .. automodule:: client
    :members:
-   :show-inheritance:
    :undoc-members:
+   :show-inheritance:

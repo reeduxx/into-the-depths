@@ -1,4 +1,5 @@
 import random
+from typing import Sequence, Any
 
 class RNG:
     """
@@ -6,8 +7,17 @@ class RNG:
 
     Wraps Python's 'random.Random' and ensures reproducible 
     random values when initialized with a fixed seed.
+
+    Attributes:
+        _rng (random.Random): The seeded RNG instance.
     """
     def __init__(self, seed: int):
+        """
+        Initializes the deterministic RNG with a seeded instance.
+
+        Args:
+            seed (int): The initial seed for the RNG.
+        """
         self._rng = random.Random(seed)
     
     def randint(self, a: int, b: int) -> int:
@@ -23,7 +33,7 @@ class RNG:
         """
         return self._rng.randint(a, b)
 
-    def choice(self, seq):
+    def choice(self, seq: Sequence) -> Any:
         """
         Returns a random element from the sequence.
         

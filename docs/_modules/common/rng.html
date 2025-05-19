@@ -70,6 +70,7 @@
              
   <h1>Source code for common.rng</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span><span class="w"> </span><span class="nn">random</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Any</span>
 
 <div class="viewcode-block" id="RNG">
 <a class="viewcode-back" href="../../common.html#common.rng.RNG">[docs]</a>
@@ -79,8 +80,17 @@
 
 <span class="sd">    Wraps Python&#39;s &#39;random.Random&#39; and ensures reproducible </span>
 <span class="sd">    random values when initialized with a fixed seed.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        _rng (random.Random): The seeded RNG instance.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializes the deterministic RNG with a seeded instance.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            seed (int): The initial seed for the RNG.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_rng</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">Random</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
     
 <div class="viewcode-block" id="RNG.randint">
@@ -101,7 +111,7 @@
 
 <div class="viewcode-block" id="RNG.choice">
 <a class="viewcode-back" href="../../common.html#common.rng.RNG.choice">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">choice</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">seq</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">choice</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">seq</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a random element from the sequence.</span>
 <span class="sd">        </span>

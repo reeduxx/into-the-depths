@@ -19,8 +19,8 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="main module" href="main.html" />
-    <link rel="prev" title="client.menu package" href="client.menu.html" /> 
+    <link rel="next" title="common.constants module" href="common.constants.html" />
+    <link rel="prev" title="client.util module" href="client.util.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -47,10 +47,9 @@
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">src</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="client.html">client package</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">common package</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#module-common.constants">common.constants module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#module-common.rng">common.rng module</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#common.rng.RNG"><code class="docutils literal notranslate"><span class="pre">RNG</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="common.constants.html">common.constants module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="common.rng.html">common.rng module</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#module-common">Module contents</a></li>
@@ -91,58 +90,20 @@
 <h1>common package<a class="headerlink" href="#common-package" title="Link to this heading"></a></h1>
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
-</section>
-<section id="module-common.constants">
-<span id="common-constants-module"></span><h2>common.constants module<a class="headerlink" href="#module-common.constants" title="Link to this heading"></a></h2>
-</section>
-<section id="module-common.rng">
-<span id="common-rng-module"></span><h2>common.rng module<a class="headerlink" href="#module-common.rng" title="Link to this heading"></a></h2>
-<dl class="py class">
-<dt class="sig sig-object py" id="common.rng.RNG">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">common.rng.</span></span><span class="sig-name descname"><span class="pre">RNG</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/common/rng.html#RNG"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#common.rng.RNG" title="Link to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>A deterministic random number generator.</p>
-<p>Wraps Python’s ‘random.Random’ and ensures reproducible
-random values when initialized with a fixed seed.</p>
-<dl class="py method">
-<dt class="sig sig-object py" id="common.rng.RNG.choice">
-<span class="sig-name descname"><span class="pre">choice</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seq</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/common/rng.html#RNG.choice"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#common.rng.RNG.choice" title="Link to this definition"></a></dt>
-<dd><p>Returns a random element from the sequence.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>seq</strong> (<em>Sequence</em>) – A non-empty sequence (list, tuple, etc.).</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A random element from the sequence.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Any</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="common.rng.RNG.randint">
-<span class="sig-name descname"><span class="pre">randint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="reference internal" href="_modules/common/rng.html#RNG.randint"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#common.rng.RNG.randint" title="Link to this definition"></a></dt>
-<dd><p>Returns a random integer N such that a &lt;= N &lt;= b.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>a</strong> (<em>int</em>) – The lower bound (inclusive).</p></li>
-<li><p><strong>b</strong> (<em>int</em>) – The upper bound (inclusive).</p></li>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="common.constants.html">common.constants module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="common.rng.html">common.rng module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="common.rng.html#common.rng.RNG"><code class="docutils literal notranslate"><span class="pre">RNG</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="common.rng.html#common.rng.RNG._rng"><code class="docutils literal notranslate"><span class="pre">RNG._rng</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="common.rng.html#common.rng.RNG.choice"><code class="docutils literal notranslate"><span class="pre">RNG.choice()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="common.rng.html#common.rng.RNG.randint"><code class="docutils literal notranslate"><span class="pre">RNG.randint()</span></code></a></li>
 </ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A random integer between a and b.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>int</p>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
+</li>
+</ul>
+</li>
+</ul>
+</div>
 </section>
 <section id="module-common">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-common" title="Link to this heading"></a></h2>
@@ -153,8 +114,8 @@ random values when initialized with a fixed seed.</p>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="client.menu.html" class="btn btn-neutral float-left" title="client.menu package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="main.html" class="btn btn-neutral float-right" title="main module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="client.util.html" class="btn btn-neutral float-left" title="client.util module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="common.constants.html" class="btn btn-neutral float-right" title="common.constants module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
