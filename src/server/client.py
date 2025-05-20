@@ -21,7 +21,7 @@ def receive():
 
 def write():
     while True:
-        message = f"{input("")}"
+        message = input("")
         client.send(message.encode("ascii"))
 
 receive_thread = threading.Thread(target=receive)

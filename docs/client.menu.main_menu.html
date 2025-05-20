@@ -94,6 +94,40 @@
 <dt class="sig sig-object py" id="client.menu.main_menu.MainMenu">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">client.menu.main_menu.</span></span><span class="sig-name descname"><span class="pre">MainMenu</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">term</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/client/menu/main_menu.html#MainMenu"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#client.menu.main_menu.MainMenu" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="client.menu.menu.html#client.menu.menu.Menu" title="client.menu.menu.Menu"><code class="xref py py-class docutils literal notranslate"><span class="pre">Menu</span></code></a></p>
+<p>Class for the game’s main menu.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="client.menu.main_menu.MainMenu.selected_index">
+<span class="sig-name descname"><span class="pre">selected_index</span></span><a class="headerlink" href="#client.menu.main_menu.MainMenu.selected_index" title="Link to this definition"></a></dt>
+<dd><p>The index of the menu item the user has selected.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="client.menu.main_menu.MainMenu.menu_width">
+<span class="sig-name descname"><span class="pre">menu_width</span></span><a class="headerlink" href="#client.menu.main_menu.MainMenu.menu_width" title="Link to this definition"></a></dt>
+<dd><p>The total width of the menu.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="client.menu.main_menu.MainMenu.menu_height">
+<span class="sig-name descname"><span class="pre">menu_height</span></span><a class="headerlink" href="#client.menu.main_menu.MainMenu.menu_height" title="Link to this definition"></a></dt>
+<dd><p>The total height of the menu.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py attribute">
 <dt class="sig sig-object py" id="client.menu.main_menu.MainMenu.MENU_OPTIONS">
 <span class="sig-name descname"><span class="pre">MENU_OPTIONS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['Continue',</span> <span class="pre">'New</span> <span class="pre">Game',</span> <span class="pre">'Credits',</span> <span class="pre">'Exit']</span></em><a class="headerlink" href="#client.menu.main_menu.MainMenu.MENU_OPTIONS" title="Link to this definition"></a></dt>
@@ -102,18 +136,38 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="client.menu.main_menu.MainMenu.display_menu">
 <span class="sig-name descname"><span class="pre">display_menu</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/client/menu/main_menu.html#MainMenu.display_menu"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#client.menu.main_menu.MainMenu.display_menu" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Renders the menu options using the double buffer.</p>
+<p>Draws a border surrounding the options, the options themselves, and
+highlights the selected option.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="client.menu.main_menu.MainMenu.get_key_map">
-<span class="sig-name descname"><span class="pre">get_key_map</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/client/menu/main_menu.html#MainMenu.get_key_map"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#client.menu.main_menu.MainMenu.get_key_map" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<span class="sig-name descname"><span class="pre">get_key_map</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="_modules/client/menu/main_menu.html#MainMenu.get_key_map"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#client.menu.main_menu.MainMenu.get_key_map" title="Link to this definition"></a></dt>
+<dd><p>Returns a dictionary mapping directional key codes to menu navigation logic.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A mapping of terminal key codes to lambda functions that move the selection.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="client.menu.main_menu.MainMenu.run">
-<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/client/menu/main_menu.html#MainMenu.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#client.menu.main_menu.MainMenu.run" title="Link to this definition"></a></dt>
-<dd><p>Runs the menu loop.</p>
-<p>Must be implemented by subclasses to define menu functionality.</p>
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/client/menu/main_menu.html#MainMenu.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#client.menu.main_menu.MainMenu.run" title="Link to this definition"></a></dt>
+<dd><p>Executes the main loop for the menu.</p>
+<p>Handles window resizing, rendering, input listening, and selection logic.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The selected menu option (lowercase, spaces replaced with underscores).</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>

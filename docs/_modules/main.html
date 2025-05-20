@@ -70,18 +70,16 @@
              
   <h1>Source code for main</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span><span class="w"> </span><span class="nn">blessed</span><span class="w"> </span><span class="kn">import</span> <span class="n">Terminal</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">client.util</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_ascii_art</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">client.menu.main_menu</span><span class="w"> </span><span class="kn">import</span> <span class="n">MainMenu</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">client.scene_manager</span><span class="w"> </span><span class="kn">import</span> <span class="n">SceneManager</span>
 
 <div class="viewcode-block" id="main">
 <a class="viewcode-back" href="../main.html#main.main">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
     <span class="n">term</span> <span class="o">=</span> <span class="n">Terminal</span><span class="p">()</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">term</span><span class="o">.</span><span class="n">clear</span><span class="p">)</span>
-    <span class="n">main_menu</span> <span class="o">=</span> <span class="n">MainMenu</span><span class="p">(</span><span class="n">term</span><span class="p">)</span>
-    <span class="n">main_menu</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
-
-    <span class="k">return</span> <span class="mi">0</span></div>
+    <span class="nb">print</span><span class="p">(</span><span class="n">term</span><span class="o">.</span><span class="n">home</span> <span class="o">+</span> <span class="n">term</span><span class="o">.</span><span class="n">clear</span><span class="p">)</span>
+    <span class="n">scene_manager</span> <span class="o">=</span> <span class="n">SceneManager</span><span class="p">(</span><span class="n">term</span><span class="p">)</span>
+    <span class="n">scene_manager</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">term</span><span class="o">.</span><span class="n">home</span> <span class="o">+</span> <span class="n">term</span><span class="o">.</span><span class="n">clear</span><span class="p">)</span></div>
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>

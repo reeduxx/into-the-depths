@@ -110,6 +110,17 @@ All derived menus must implement the ‘run()’ method.</p>
 </dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="client.menu.menu.Menu.buffer">
+<span class="sig-name descname"><span class="pre">buffer</span></span><a class="headerlink" href="#client.menu.menu.Menu.buffer" title="Link to this definition"></a></dt>
+<dd><p>The screen buffer used for optimized terminal rendering.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="client.screen_buffer.html#client.screen_buffer.ScreenBuffer" title="client.screen_buffer.ScreenBuffer">ScreenBuffer</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="client.menu.menu.Menu._prev_width">
 <span class="sig-name descname"><span class="pre">_prev_width</span></span><a class="headerlink" href="#client.menu.menu.Menu._prev_width" title="Link to this definition"></a></dt>
 <dd><p>Cached terminal width.</p>
@@ -133,13 +144,14 @@ All derived menus must implement the ‘run()’ method.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="client.menu.menu.Menu.center_text">
-<span class="sig-name descname"><span class="pre">center_text</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/client/menu/menu.html#Menu.center_text"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#client.menu.menu.Menu.center_text" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">center_text</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">style</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/client/menu/menu.html#Menu.center_text"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#client.menu.menu.Menu.center_text" title="Link to this definition"></a></dt>
 <dd><p>Prints centered text at a given y-coordinate.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>y</strong> (<em>int</em>) – The y-coordinate (row) to print the text on.</p></li>
 <li><p><strong>text</strong> (<em>str</em>) – The text to center and print.</p></li>
+<li><p><strong>style</strong> (<em>str</em><em>, </em><em>optional</em>) – blessed style string to apply (e.g. term.bold, term.reverse).</p></li>
 </ul>
 </dd>
 </dl>
@@ -148,8 +160,13 @@ All derived menus must implement the ‘run()’ method.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="client.menu.menu.Menu.clear_screen">
 <span class="sig-name descname"><span class="pre">clear_screen</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/client/menu/menu.html#Menu.clear_screen"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#client.menu.menu.Menu.clear_screen" title="Link to this definition"></a></dt>
-<dd><p>Clears the terminal and moves the cursor to the top-left corner.</p>
+<dd><p>Clears the entire terminal and resets the cursor to the top-left corner.</p>
 </dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="client.menu.menu.Menu.draw_ascii_art">
+<span class="sig-name descname"><span class="pre">draw_ascii_art</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ascii_art</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">top_y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">opaque_style</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transparent_style</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/client/menu/menu.html#Menu.draw_ascii_art"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#client.menu.menu.Menu.draw_ascii_art" title="Link to this definition"></a></dt>
+<dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="client.menu.menu.Menu.draw_box">

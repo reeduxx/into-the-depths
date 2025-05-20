@@ -17,6 +17,7 @@ Submodules
 
    client.constants
    client.scene_manager
+   client.screen_buffer
    client.util
 
 Module contents
