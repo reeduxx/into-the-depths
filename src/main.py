@@ -1,11 +1,12 @@
 from blessed import Terminal
-from client.menu.main_menu import MainMenu
+from client.scene_manager import SceneManager
 
 def main():
     term = Terminal()
-    print(term.clear)
-    main_menu = MainMenu(term)
-    main_menu.run()
+    print(term.home + term.clear)
+    scene_manager = SceneManager(term)
+    scene_manager.run()
+    print(term.home + term.clear)
 
 if __name__ == '__main__':
     main()

@@ -1,50 +1,103 @@
 from client.menu.menu import Menu
+from client.util import load_ascii_art
 
 class MainMenu(Menu):
+    """
+    Class for the game's main menu.
+
+    Attributes:
+        selected_index (int): The index of the menu item the user has selected.
+        menu_width (int): The total width of the menu.
+        menu_height (int): The total height of the menu.
+    """
     MENU_OPTIONS = ["Continue", "New Game", "Credits", "Exit"]
 
     def __init__(self, term):
+        """
+        Initializes the MainMenu with a terminal instance.
+
+        args:
+            term (blessed.Terminal): The terminal instance used for input and display.
+        """
         super().__init__(term)
         self.selected_index = 0
+        self.ascii_art = load_ascii_art("assets/title.txt")
         self.menu_width = max(len(opt) for opt in self.MENU_OPTIONS) + 6
         self.menu_height = len(self.MENU_OPTIONS) * 2 + 2
     
-    def run(self):
+    def run(self) -> str:
+        """
+        Executes the main loop for the menu.
+
+        Handles window resizing, rendering, input listening, and selection logic.
+
+        Returns:
+            str: The selected menu option (lowercase, spaces replaced with underscores).
+        """
         with self.term.cbreak(), self.term.hidden_cursor():
+            self.buffer.clear()
+
             while True:
                 if self.window_resized():
                     self._prev_width, self._prev_height = self.term.width, self.term.height
-                    self.clear_screen()
+                    self.buffer.resize()
+                    self.buffer.clear()
                 
                 self.display_menu()
-                key = self.term.inkey(timeout=0.1)
+                self.buffer.render()
                 
-                if key.code == self.term.KEY_UP:
-                    self.selected_index = (self.selected_index - 1) % len(self.MENU_OPTIONS)
-                elif key.code == self.term.KEY_DOWN:
-                    self.selected_index = (self.selected_index + 1) % len(self.MENU_OPTIONS)
+                key = self.term.inkey(timeout=0.1)
+                key_map = self.get_key_map()
+
+                if key.code in key_map:
+                    key_map[key.code]()
+                    self._menu_dirty = True
                 elif key.code == self.term.KEY_ENTER:
                     return self.MENU_OPTIONS[self.selected_index].lower().replace(' ', '_')
     
     def display_menu(self):
+        """
+        Renders the menu options using the double buffer.
+
+        Draws a border surrounding the options, the options themselves, and 
+        highlights the selected option.
+        """
         x = (self.term.width - self.menu_width) // 2
         y = max(14, (self.term.height - self.menu_height) // 2)
+        self.draw_ascii_art(self.ascii_art, 2, self.term.white, self.term.red)
         self.draw_box(x, y, self.menu_width, self.menu_height)
 
         for i, option in enumerate(self.MENU_OPTIONS):
             line_y = y + 2 + (i * 2)
+            pad_left = (self.menu_width - len(option) - 2) // 2
+            pad_right = self.menu_width - len(option) - 2 - pad_left
+            style = self.term.reverse if i == self.selected_index else ''
+            self.buffer.draw_text(x + 1, line_y, ' ' * pad_left)
 
-            with self.term.location(x, line_y):
-                pad_left = (self.menu_width - len(option) - 2) // 2
-                pad_right = self.menu_width - len(option) - 2 - pad_left
-                text = f"{' ' * pad_left}{self.term.reverse}{option}{self.term.normal}{' ' * pad_right}" if i == self.selected_index else f"{' ' * pad_left}{option}{' ' * pad_right}"
-                print(f"│{text}│")
+            if i == self.selected_index:
+                self.buffer.draw_text(x + 1 + pad_left, line_y, option, style=self.term.reverse)
+            else:
+                self.buffer.draw_text(x + 1 + pad_left, line_y, option)
+            
+            self.buffer.draw_text(x + 1 + pad_left + len(option), line_y, ' ' * pad_right)
 
-    def get_key_map(self):
+    def get_key_map(self) -> dict:
+        """
+        Returns a dictionary mapping directional key codes to menu navigation logic.
+
+        Returns:
+            dict: A mapping of terminal key codes to lambda functions that move the selection.
+        """
         return {
             self.term.KEY_UP: lambda: self._move_selection(-1),
             self.term.KEY_DOWN: lambda: self._move_selection(1)
         }
 
     def _move_selection(self, delta):
+        """
+        Moves the selection up or down in the menu.
+
+        Args:
+            delta (int): The direction to move (-1 is up, 1 is down).
+        """
         self.selected_index = (self.selected_index + delta) % len(self.MENU_OPTIONS)
