@@ -1,5 +1,6 @@
 from client.menu.menu import Menu
 from client.util import load_ascii_art
+from common import __version__
 
 class MainMenu(Menu):
     """
@@ -10,9 +11,9 @@ class MainMenu(Menu):
         menu_width (int): The total width of the menu.
         menu_height (int): The total height of the menu.
     """
-    MENU_OPTIONS = ["Continue", "New Game", "Credits", "Exit"]
+    MENU_OPTIONS = ["Continue", "New Game", "Multiplayer", "Credits", "Exit"]
 
-    def __init__(self, term):
+    def __init__(self, term, config):
         """
         Initializes the MainMenu with a terminal instance.
 
@@ -20,6 +21,8 @@ class MainMenu(Menu):
             term (blessed.Terminal): The terminal instance used for input and display.
         """
         super().__init__(term)
+        self.config = config
+        self.theme = self.config.get("theme", "auto")
         self.selected_index = 0
         self.ascii_art = load_ascii_art("assets/title.txt")
         self.menu_width = max(len(opt) for opt in self.MENU_OPTIONS) + 6
@@ -64,7 +67,9 @@ class MainMenu(Menu):
         """
         x = (self.term.width - self.menu_width) // 2
         y = max(14, (self.term.height - self.menu_height) // 2)
-        self.draw_ascii_art(self.ascii_art, 2, self.term.white, self.term.red)
+        opaque_color = self.term.white if self.theme == "dark" or self.theme == "auto" else self.term.black
+        transparent_color = self.term.red if self.theme == "dark" or self.theme == "auto" else self.term.green
+        self.draw_ascii_art(self.ascii_art, 2, opaque_color, transparent_color)
         self.draw_box(x, y, self.menu_width, self.menu_height)
 
         for i, option in enumerate(self.MENU_OPTIONS):
@@ -80,6 +85,8 @@ class MainMenu(Menu):
                 self.buffer.draw_text(x + 1 + pad_left, line_y, option)
             
             self.buffer.draw_text(x + 1 + pad_left + len(option), line_y, ' ' * pad_right)
+            self.buffer.draw_text(0, self.term.height - 1, f"X: {self.term.width}, Y: {self.term.height}")
+            self.buffer.draw_text(self.term.width - len(__version__), self.term.height - 1, __version__)
 
     def get_key_map(self) -> dict:
         """

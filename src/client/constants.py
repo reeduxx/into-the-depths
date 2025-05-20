@@ -4,5 +4,5 @@ BLOCK_SHADING = {
 }
 
 # TODO: Determine optimal minimum window size
-# MIN_WIDTH = 720
-# MIN_HEIGHT = 480
+MIN_WIDTH = 113
+MIN_HEIGHT = 27

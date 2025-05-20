@@ -1,4 +1,23 @@
 import os
+import tomllib
+
+DEFAULT_CONFIG = {
+    "theme": "auto"
+}
+
+def detect_background() -> str:
+    colorfgbg = os.environ.get("COLORFGBG")
+
+    if colorfgbg:
+        try:
+            fg, bg = map(int, colorfgbg.split(';')[-2:])
+            
+            if bg >= 10:
+                return "light"
+        except Exception:
+            pass
+    
+    return "dark"
 
 def load_ascii_art(relative_path: str) -> str:
     """
@@ -15,3 +34,24 @@ def load_ascii_art(relative_path: str) -> str:
 
     with open(full_path, 'r', encoding='utf-8') as file:
         return file.read()
+
+def load_config(path: str = "config/config.toml") -> dict:
+    """
+    Loads the user config file.
+
+    Args:
+        path (str): Relative path the config.toml file.
+    
+    Returns:
+        dict: A dictionary containing the config file keys and values.
+    """
+    if not os.path.exists(path):
+        return DEFAULT_CONFIG.copy()
+    
+    try:
+        with open(path, "rb") as file:
+            user_config = tomllib.load(file)
+    except Exception:
+        return DEFAULT_CONFIG.copy()
+
+    return {**DEFAULT_CONFIG, **user_config}
