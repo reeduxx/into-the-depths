@@ -65,7 +65,7 @@ class CharacterCreationMenu(Menu):
         box_width = (self.term.width - 1) // 2
         box_x = 1
         box_y = 17
-        self.draw_box(box_x, box_y, box_width, (self.term.height - 18) // 2)
+        self.draw_box(box_x, box_y, box_width, (self.term.height - 19) // 2)
 
     def display_class_input(self):
         box_width = (self.term.width - 1) // 2
@@ -75,7 +75,7 @@ class CharacterCreationMenu(Menu):
     
     def display_stats_input(self):
         box_width = (self.term.width - 1) // 2
-        box_x = self.term.width // 2
+        box_x = (self.term.width + 1) // 2
         box_y = 17
         self.draw_box(box_x, box_y, box_width, (self.term.height - 19))
     
