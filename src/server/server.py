@@ -2,13 +2,15 @@ import socket
 import threading
 from TurnKeeper.TurnKeeper import TurnKeeper
 
+
 class GameServer:
-    def __init__(self, host=socket.gethostname(), port=55555, turn_time=3):
+    def __init__(self, host=socket.gethostname(), port=55556, turn_time=3):
         self.host = host
         self.port = port
         self.turn_time = turn_time
 
         self.server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1) 
         self.server_socket.bind((self.host, self.port))
         self.server_socket.listen()
 

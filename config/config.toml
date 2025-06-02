@@ -1,2 +1,2 @@
 # Terminal appearance
-theme = "dark" #  Options: "auto", "dark", "light"
+theme = "auto" #  Options: "auto", "dark", "light"
