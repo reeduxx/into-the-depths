@@ -7,7 +7,9 @@ class MainMenu(Menu):
     Class for the game's main menu.
 
     Attributes:
+        theme (str): The theme of the menu (dark or light).
         selected_index (int): The index of the menu item the user has selected.
+        ascii_art (str): The ASCII art to display at the top of the menu.
         menu_width (int): The total width of the menu.
         menu_height (int): The total height of the menu.
     """
@@ -19,6 +21,7 @@ class MainMenu(Menu):
 
         args:
             term (blessed.Terminal): The terminal instance used for input and display.
+            config (dict): The game configuration.
         """
         super().__init__(term)
         self.config = config
@@ -66,10 +69,10 @@ class MainMenu(Menu):
         highlights the selected option.
         """
         x = (self.term.width - self.menu_width) // 2
-        y = max(14, (self.term.height - self.menu_height) // 2)
+        y = max(12, (self.term.height - self.menu_height) // 2)
         opaque_color = self.term.white if self.theme == "dark" or self.theme == "auto" else self.term.black
         transparent_color = self.term.red if self.theme == "dark" or self.theme == "auto" else self.term.green
-        self.draw_ascii_art(self.ascii_art, 2, opaque_color, transparent_color)
+        self.draw_ascii_art(self.ascii_art, 1, opaque_color, transparent_color)
         self.draw_box(x, y, self.menu_width, self.menu_height)
 
         for i, option in enumerate(self.MENU_OPTIONS):
@@ -85,7 +88,6 @@ class MainMenu(Menu):
                 self.buffer.draw_text(x + 1 + pad_left, line_y, option)
             
             self.buffer.draw_text(x + 1 + pad_left + len(option), line_y, ' ' * pad_right)
-            self.buffer.draw_text(0, self.term.height - 1, f"X: {self.term.width}, Y: {self.term.height}")
             self.buffer.draw_text(self.term.width - len(__version__), self.term.height - 1, __version__)
 
     def get_key_map(self) -> dict:

@@ -1,6 +1,6 @@
 from enum import Enum, auto
 from client.menu.menu import Menu
-from client.util import load_config
+from client.util import load_ascii_art
 
 class CreationPhase(Enum):
     NAME = auto()
@@ -14,6 +14,7 @@ class CharacterCreationMenu(Menu):
         super().__init__(term)
         self.config = config
         self.theme = self.config.get("theme", "auto")
+        self.ascii_art = load_ascii_art("assets/create.txt")
         self.phase = CreationPhase.NAME
         self.max_name_length = 16
         self.name = ""
@@ -37,8 +38,14 @@ class CharacterCreationMenu(Menu):
             return self.name
     
     def display(self):
-        if self.phase == CreationPhase.NAME:
-            self.display_name_input()
+        opaque_color = self.term.white if self.theme == "dark" or self.theme == "auto" else self.term.black
+        transparent_color = self.term.red if self.theme == "dark" or self.theme == "auto" else self.term.green
+        self.draw_ascii_art(self.ascii_art, 1, opaque_color, transparent_color)
+        self.buffer.draw_text(0, 0, f"W: {self.term.width} H: {self.term.height}")
+        self.display_name_input()
+        self.display_species_input()
+        self.display_class_input()
+        self.display_stats_input()
     
     def handle_input(self, key):
         if self.phase == CreationPhase.NAME:
@@ -47,14 +54,30 @@ class CharacterCreationMenu(Menu):
     def display_name_input(self):
         box_width = self.max_name_length + 10
         box_x = (self.term.width - box_width) // 2
-        box_y = self.term.height // 3
-        self.draw_box(box_x, box_y, box_width, 5)
-        label = "Enter Name: "
-        self.center_text(box_y - 2, label, style=self.term.bold)
-        name_display = self.name + ('_' if not self.name_confirmed else '')
+        box_y = 12
+        self.draw_box(box_x, box_y, box_width, 4)
+        name_display = "Name: " + self.name + ('_' if not self.name_confirmed else ' ') * (self.max_name_length - len(self.name))
         name_x = (self.term.width - len(name_display)) // 2
         name_y = box_y + 2
-        self.buffer.draw_text(name_x, name_y, name_display, style=self.term.green)
+        self.buffer.draw_text(name_x, name_y, name_display)
+    
+    def display_species_input(self):
+        box_width = (self.term.width - 1) // 2
+        box_x = 1
+        box_y = 17
+        self.draw_box(box_x, box_y, box_width, (self.term.height - 18) // 2)
+
+    def display_class_input(self):
+        box_width = (self.term.width - 1) // 2
+        box_x = 1
+        box_y = self.term.height - (self.term.height - 16) // 2
+        self.draw_box(box_x, box_y, box_width, (self.term.height - 20) // 2)
+    
+    def display_stats_input(self):
+        box_width = (self.term.width - 1) // 2
+        box_x = self.term.width // 2
+        box_y = 17
+        self.draw_box(box_x, box_y, box_width, (self.term.height - 19))
     
     def handle_name_input(self, key):
         if key.code == self.term.KEY_ENTER and self.name:
@@ -62,7 +85,5 @@ class CharacterCreationMenu(Menu):
             self.phase = CreationPhase.SPECIES
         elif key.code == self.term.KEY_BACKSPACE and self.name:
             self.name = self.name[:-1]
-        elif key.isalnum() and len(self.name) < self.max_name_length:
+        elif (key.isalnum() or key.code == self.term.KEY_SPACE) and len(self.name) < self.max_name_length:
             self.name += key
-        elif key.code == self.term.KEY_ESCAPE:
-            self.name = ""
