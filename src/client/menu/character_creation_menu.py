@@ -14,7 +14,7 @@ class CharacterCreationMenu(Menu):
         super().__init__(term)
         self.config = config
         self.theme = self.config.get("theme", "auto")
-        self.ascii_art = load_ascii_art("assets/create.txt")
+        self.ascii_art = load_ascii_art("assets/ascii/create.txt")
         self.phase = CreationPhase.NAME
         self.max_name_length = 16
         self.name = ""
@@ -64,19 +64,22 @@ class CharacterCreationMenu(Menu):
         box_width = (self.term.width - 1) // 2
         box_x = 1
         box_y = 17
-        self.draw_box(box_x, box_y, box_width, (self.term.height - 19) // 2)
+        box_height = (self.term.height - 19) // 2
+        self.draw_box(box_x, box_y, box_width, box_height)
 
     def display_class_input(self):
         box_width = (self.term.width - 1) // 2
         box_x = 1
         box_y = self.term.height - (self.term.height - 16) // 2
-        self.draw_box(box_x, box_y, box_width, (self.term.height - 20) // 2)
+        box_height = (self.term.height - 20) // 2
+        self.draw_box(box_x, box_y, box_width, box_height)
     
     def display_stats_input(self):
         box_width = (self.term.width - 1) // 2
         box_x = (self.term.width + 1) // 2
         box_y = 17
-        self.draw_box(box_x, box_y, box_width, (self.term.height - 19))
+        box_height = self.term.height - 19
+        self.draw_box(box_x, box_y, box_width, box_height)
     
     def handle_name_input(self, key):
         if key.code == self.term.KEY_ENTER and self.name:

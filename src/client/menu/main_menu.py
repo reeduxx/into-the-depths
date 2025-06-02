@@ -27,7 +27,7 @@ class MainMenu(Menu):
         self.config = config
         self.theme = self.config.get("theme", "auto")
         self.selected_index = 0
-        self.ascii_art = load_ascii_art("assets/title.txt")
+        self.ascii_art = load_ascii_art("assets/ascii/title.txt")
         self.menu_width = max(len(opt) for opt in self.MENU_OPTIONS) + 6
         self.menu_height = len(self.MENU_OPTIONS) * 2 + 2
     
