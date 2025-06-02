@@ -41,7 +41,6 @@ class CharacterCreationMenu(Menu):
         opaque_color = self.term.white if self.theme == "dark" or self.theme == "auto" else self.term.black
         transparent_color = self.term.red if self.theme == "dark" or self.theme == "auto" else self.term.green
         self.draw_ascii_art(self.ascii_art, 1, opaque_color, transparent_color)
-        self.buffer.draw_text(0, 0, f"W: {self.term.width} H: {self.term.height}")
         self.display_name_input()
         self.display_species_input()
         self.display_class_input()
