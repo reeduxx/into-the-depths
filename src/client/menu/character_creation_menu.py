@@ -84,5 +84,5 @@ class CharacterCreationMenu(Menu):
             self.phase = CreationPhase.SPECIES
         elif key.code == self.term.KEY_BACKSPACE and self.name:
             self.name = self.name[:-1]
-        elif (key.isalnum() or key.code == self.term.KEY_SPACE) and len(self.name) < self.max_name_length:
+        elif (key.isalnum() or key.code == 32 or key == ' ') and len(self.name) < self.max_name_length:
             self.name += key
