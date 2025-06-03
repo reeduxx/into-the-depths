@@ -49,6 +49,12 @@ class CharacterCreationMenu(Menu):
     def handle_input(self, key):
         if self.phase == CreationPhase.NAME:
             self.handle_name_input(key)
+        if self.phase == CreationPhase.SPECIES:
+            self.handle_species_input(key)
+        if self.phase == CreationPhase.CLASS:
+            self.handle_class_input(key)
+        if self.phase == CreationPhase.STATS:
+            self.handle_stats_input(key)
     
     def display_name_input(self):
         box_width = self.max_name_length + 10
@@ -66,6 +72,12 @@ class CharacterCreationMenu(Menu):
         box_y = 17
         box_height = (self.term.height - 19) // 2
         self.draw_box(box_x, box_y, box_width, box_height)
+        
+        if self.phase == CreationPhase.SPECIES:
+            controls_display = "[ ⇦ Prev | Enter Confirm | Next ⇨ ]"
+            controls_x = (box_width - len(controls_display)) // 2
+            controls_y = box_y + box_height - 2
+            self.buffer.draw_text(controls_x, controls_y, controls_display)
 
     def display_class_input(self):
         box_width = (self.term.width - 1) // 2
@@ -73,6 +85,12 @@ class CharacterCreationMenu(Menu):
         box_y = self.term.height - (self.term.height - 16) // 2
         box_height = (self.term.height - 20) // 2
         self.draw_box(box_x, box_y, box_width, box_height)
+
+        if self.phase == CreationPhase.CLASS:
+            controls_display = "[ ⇦ Prev | Enter Confirm | Next ⇨ ]"
+            controls_x = (box_width - len(controls_display)) // 2
+            controls_y = box_y + box_height - 2
+            self.buffer.draw_text(controls_x, controls_y, controls_display)
     
     def display_stats_input(self):
         box_width = (self.term.width - 1) // 2
@@ -89,3 +107,15 @@ class CharacterCreationMenu(Menu):
             self.name = self.name[:-1]
         elif (key.isalnum() or key.code == 32 or key == ' ') and len(self.name) < self.max_name_length:
             self.name += key
+    
+    def handle_species_input(self, key):
+        if key.code == self.term.KEY_ENTER:
+            self.phase = CreationPhase.CLASS
+    
+    def handle_class_input(self, key):
+        if key.code == self.term.KEY_ENTER:
+            self.phase = CreationPhase.STATS
+    
+    def handle_stats_input(self, key):
+        if key.code == self.term.KEY_ENTER:
+            self.phase = CreationPhase.COMPLETE
