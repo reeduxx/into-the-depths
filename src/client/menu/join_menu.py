@@ -1,4 +1,5 @@
 from client.menu.menu import Menu
+from server.client import join_server
 
 class JoinMenu(Menu):
     def __init__(self, term, config):
@@ -22,7 +23,7 @@ class JoinMenu(Menu):
 
     def display_menu(self):
         
-        box_width = self.max_ip_length + 10
+        box_width = self.max_ip_length + 12
         box_x = (self.term.width - box_width) // 2
         box_y = 12
         self.draw_box(box_x, box_y, box_width, 4)
@@ -32,17 +33,16 @@ class JoinMenu(Menu):
         self.buffer.draw_text(ip_x, ip_y, ip_display)
 
     def handle_input(self, key):
+
         if key.code == self.term.KEY_ENTER and self.ip_string:
             self.num_confirmed = True
             print(f"Joining server using ip: {self.ip_string}")
-            self.join_server()
             return True
+        
         elif key.code == self.term.KEY_BACKSPACE and self.ip_string:
             self.ip_string = self.ip_string[:-1]
-        elif (key.isalnum() or key.code == 32 or key == ' ') and len(self.ip_string) < self.max_ip_length:
-            self.ip_string += key
-        return False
 
-    #TODO implement server joining code using this method
-    def join_server(self):
-        pass
+        elif key and len(key) == 1 and key in '0123456789.':
+            if len(self.ip_string) < self.max_ip_length:
+                self.ip_string += key
+        return False
