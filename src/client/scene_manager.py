@@ -1,6 +1,7 @@
 from client.menu.character_creation_menu import CharacterCreationMenu
 from client.menu.main_menu import MainMenu
 from client.menu.multiplayer_menu import MultiplayerMenu
+from client.menu.join_menu import JoinMenu
 class SceneManager:
     def __init__(self, term, config):
         self.term = term
@@ -19,7 +20,11 @@ class SceneManager:
             if result == "multiplayer":
                 scene = MultiplayerMenu(self.term, self.config)
                 choice = scene.run()
-                pass 
+                if choice == "join":
+                    scene = JoinMenu(self.term, self.config)
+                    scene.run()
+                if choice == "host":
+                    pass
 
             elif result == "exit":
                 break

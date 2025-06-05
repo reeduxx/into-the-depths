@@ -1,5 +1,4 @@
 from client.menu.menu import Menu
-import sys
 
 class MultiplayerMenu(Menu):
     def __init__(self, term, config):
@@ -15,8 +14,8 @@ class MultiplayerMenu(Menu):
         box_y = (self.term.height - box_height) // 2
 
         with self.term.cbreak(), self.term.hidden_cursor():
+            self.buffer.clear()
             while True:
-                self.clear_screen()
                 
                 # Draw the box
                 self.draw_box(box_x, box_y, box_width, box_height)
@@ -41,7 +40,7 @@ class MultiplayerMenu(Menu):
                     index = (index - 1) % len(options)
                 elif key.code == self.term.KEY_DOWN:
                     index = (index + 1) % len(options)
-                elif key.name == "ENTER":
+                elif key.code == self.term.KEY_ENTER:
                     return options[index].lower()
                 elif key.lower() == "q":
                     return "back"
