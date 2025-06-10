@@ -1,5 +1,5 @@
 from client.menu.menu import Menu
-from server.client import join_server
+
 
 class JoinMenu(Menu):
     def __init__(self, term, config):
