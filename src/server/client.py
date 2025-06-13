@@ -2,7 +2,7 @@ import socket
 import threading
 from typing import Optional, Dict
 import pickle
-from character import Character
+from common.player.character import Character
 
 #TODO implement character class 
 class Client:

@@ -1,6 +1,7 @@
 import socket
 import threading
 from TurnKeeper.TurnKeeper import TurnKeeper
+from gamephase import GamePhase
 
 
 class GameServer:
@@ -17,6 +18,7 @@ class GameServer:
         self.clients = []
         self.nicknames = []
         self.turnkeeper = None
+        self.game_phase = GamePhase.LOBBY
         self.lock = threading.Lock()
 
     def broadcast(self, message):
@@ -25,6 +27,24 @@ class GameServer:
                 client.send(message.encode('ascii'))
             except:
                 continue
+
+    def switch_state(self, game_state):
+
+        """Planned future usage when switching phases:
+       current_phase = GamePhase.LOBBY
+       self.switch_state(current_state)
+        """
+        
+        match game_state:
+            case GamePhase.LOBBY:
+                return "Game lobby code here"
+            case GamePhase.COMBAT:
+                return "Combat code here"
+            case GamePhase.EXPLORATION:
+                return "Exploration code here"
+            case _:
+                return "Unknown game state"
+
 
     def start_combat(self):
         with self.lock:
