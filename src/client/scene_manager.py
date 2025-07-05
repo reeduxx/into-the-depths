@@ -2,6 +2,7 @@ from client.menu.character_creation_menu import CharacterCreationMenu
 from client.menu.main_menu import MainMenu
 from client.menu.multiplayer_menu import MultiplayerMenu
 from client.menu.join_menu import JoinMenu
+
 class SceneManager:
     def __init__(self, term, config):
         self.term = term
@@ -26,5 +27,5 @@ class SceneManager:
                 if choice == "host":
                     pass
 
-            elif result == "exit":
+            if result == "exit":
                 break
