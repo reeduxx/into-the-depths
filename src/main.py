@@ -1,16 +1,15 @@
 from blessed import Terminal
-from menu.main_menu import MainMenu
-from dungeon.dungeon import generate_dungeon
+from client.scene_manager import SceneManager
+from client.util import load_config
+from time import sleep
 
 def main():
     term = Terminal()
-    menu = MainMenu(term)
-    menu.run()
-    print(term.clear)
-    '''
-    dungeon = generate_dungeon(40, 25, min_size=6, drunken_walk_steps=20)
-    dungeon.print_dungeon()
-    '''
+    config = load_config("config/config.toml")
+    print(term.home + term.clear)
+    scene_manager = SceneManager(term, config)
+    scene_manager.run()
+    print(term.home + term.clear)
 
 if __name__ == '__main__':
-	main()
+    main()

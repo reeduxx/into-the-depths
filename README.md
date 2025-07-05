@@ -25,9 +25,9 @@ py src/main.py
 ```
 
 # Third-Party Tools & Libraries
-ASCII text art created with patorjk's [Text to ASCII Art Generator](https://patorjk.com/software/taag/#p=display&f=Bloody&t=Type%20Something%20).
+ASCII text art generated with patorjk's [Text to ASCII Art Generator](https://patorjk.com/software/taag/#p=display&f=Bloody&t=Type%20Something%20).
 
-This project uses [blessed](https://pypi.org/project/blessed/), which is licensed under the **MIT License**. See [LICENSES/blessed_license.txt](LICENSES/blessed_license.txt) for more information.
+This project uses [blessed](https://pypi.org/project/blessed/) by Jeff Quast, which is licensed under the [MIT License](https://github.com/jquast/blessed/blob/master/LICENSE).
 
 # Credits
-Developed by reeduxx
+Developed by Brighton Ulery and Caleb Buth
