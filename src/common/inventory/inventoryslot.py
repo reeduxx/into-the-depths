@@ -1,4 +1,4 @@
-from item import Item
+from .item import Item
 from typing import Optional, Tuple
 from dataclasses import dataclass
 

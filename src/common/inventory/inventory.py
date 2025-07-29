@@ -1,7 +1,7 @@
 from typing import Tuple, Optional, Dict, List
-from item import Item
-from itemtype import ItemType
-from inventoryslot import InventorySlot
+from .item import Item
+from .itemtype import ItemType
+from .inventoryslot import InventorySlot
 
 class Inventory:
     #Manages character inventory with flexible slot system
@@ -17,7 +17,7 @@ class Inventory:
             'shield': None,
             'accessory': None
         }
-    
+
     def add_item(self, item: Item, quantity: int = 1) -> int:
        # Add item to inventory, returns amount actually added
         remaining = quantity
@@ -61,6 +61,13 @@ class Inventory:
                 if total >= quantity:
                     return True
         return False
+    
+    def get_total_items(self) -> int:
+        total = 0
+        for slot in self.slots:
+            if slot.item is not None and not slot.is_empty():
+                total += slot.quantity
+        return total
     
     def get_item_quantity(self, item_name: str) -> int:
         #Get total quantity of an item in inventory

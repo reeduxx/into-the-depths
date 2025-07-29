@@ -1,7 +1,7 @@
 from dataclasses import dataclass,field
-from inventory.itemtype import ItemType
-from inventory.weapontype import WeaponType
-from player.characterclass import CharacterClass
+from .itemtype import ItemType
+from .weapontype import WeaponType
+from ..player.characterclass import CharacterClass
 from typing import Optional, Dict, Any
 
 @dataclass

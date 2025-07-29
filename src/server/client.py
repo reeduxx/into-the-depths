@@ -3,8 +3,8 @@ import threading
 from typing import Optional, Dict
 import pickle
 from common.player.character import Character
+from server import GamePhase
 
-#TODO implement character class 
 class Client:
     def __init__(self, ip, character: Character):
         self.character = character
@@ -20,7 +20,7 @@ class Client:
         self.message_queue = []
         self.queue_lock = threading.Lock()
 
-    def connect_to_server(self, host: str = "localhost", port: int = 7777) -> bool:
+    def connect_to_server(self, host: str = socket.gethostname(), port: int = 55556) -> bool:
 
         #attempts server connection and sends clients character data as a handshake. Returns T/F.
 
@@ -57,7 +57,8 @@ class Client:
         
         try:
             pickled_message = pickle.dumps(message_data)
-            self.socket.sendall(pickled_message)
+            if self.socket != None:
+                self.socket.sendall(pickled_message)
 
         except Exception as e:
             print(f"Failed to send message: {e}")
@@ -68,25 +69,25 @@ class Client:
         # messages from server in separate thread
         while self.running:
             try:
-                # Receive message length
-                length_bytes = self.socket.recv(4)
-                if not length_bytes:
-                    break
-                
-                message_length = int.from_bytes(length_bytes, 'big')
-                
-                # Receive full message
-                message_data = b''
-                while len(message_data) < message_length:
-                    chunk = self.socket.recv(message_length - len(message_data))
-                    if not chunk:
+                if self.socket != None:# Receive message length
+                    length_bytes = self.socket.recv(4)
+                    if not length_bytes:
                         break
-                    message_data += chunk
-                
-                # Deserialize and queue message
-                message = pickle.loads(message_data)
-                with self.queue_lock:
-                    self.message_queue.append(message)
+                    
+                    message_length = int.from_bytes(length_bytes, 'big')
+                    
+                    # Receive full message
+                    message_data = b''
+                    while len(message_data) < message_length:
+                        chunk = self.socket.recv(message_length - len(message_data))
+                        if not chunk:
+                            break
+                        message_data += chunk
+                    
+                    # Deserialize and queue message
+                    message = pickle.loads(message_data)
+                    with self.queue_lock:
+                        self.message_queue.append(message)
                     
             except Exception as e:
                 if self.running:
