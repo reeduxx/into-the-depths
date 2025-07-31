@@ -2,7 +2,7 @@ from client.menu.character_creation_menu import CharacterCreationMenu
 from client.menu.main_menu import MainMenu
 from client.menu.multiplayer_menu import MultiplayerMenu
 from client.menu.join_menu import JoinMenu
-
+from client.menu.action_menu import ActionMenu
 class SceneManager:
     def __init__(self, term, config):
         self.term = term
@@ -27,5 +27,10 @@ class SceneManager:
                 if choice == "host":
                     pass
 
+            if result == "actions":
+                scene = ActionMenu(self.term, self.config)
+                scene.run()
+
+            
             if result == "exit":
                 break

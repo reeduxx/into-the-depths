@@ -32,7 +32,7 @@ class InventoryTests(unittest.TestCase):
     def test_get_item_quantity(self):
         self.inv.add_item(self.health_potion, 2)
         self.assertEqual(self.inv.get_item_quantity("Banana of truth"), 2)
-        self.assertEqual(self.inv.get_item_quantity("Iron Sword"), 0)
+        self.assertEqual(self.inv.get_item_quantity("Iron Sword"), 0) 
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)

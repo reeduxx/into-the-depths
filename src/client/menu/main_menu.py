@@ -13,7 +13,7 @@ class MainMenu(Menu):
         menu_width (int): The total width of the menu.
         menu_height (int): The total height of the menu.
     """
-    MENU_OPTIONS = ["Continue", "New Game", "Multiplayer", "Credits", "Exit"]
+    MENU_OPTIONS = ["Continue", "New Game", "Multiplayer", "Credits", "Exit", "actions"]
 
     def __init__(self, term, config):
         """

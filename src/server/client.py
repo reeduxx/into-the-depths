@@ -3,7 +3,7 @@ import threading
 from typing import Optional, Dict
 import pickle
 from common.player.character import Character
-from server import GamePhase
+from gamephase import GamePhase
 
 class Client:
     def __init__(self, ip, character: Character):
@@ -20,6 +20,9 @@ class Client:
         self.message_queue = []
         self.queue_lock = threading.Lock()
 
+
+
+    #NETWORKING FUNCS
     def connect_to_server(self, host: str = socket.gethostname(), port: int = 55556) -> bool:
 
         #attempts server connection and sends clients character data as a handshake. Returns T/F.
@@ -30,7 +33,7 @@ class Client:
 
             handshake_data = {
                 'type': 'character_join',
-                'character_data': self.character.serialize(),
+                'character_data': pickle.dumps(self.character),
                 'player_name': self.character.name
             }
             self.send_message(handshake_data)
@@ -48,7 +51,9 @@ class Client:
             print(f"Failed to connect to server: {e}")
             return False
         
-
+   
+   
+    #MESSAGING FUNCS
     def send_message(self, message_data: Dict):
         #Send message to server. expects Dict formatting
 
@@ -93,5 +98,3 @@ class Client:
                 if self.running:
                     print(f"Error receiving message: {e}")
                 break
-
-

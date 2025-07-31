@@ -38,10 +38,15 @@ class GameServer:
             print(f"[ERROR] invalid attack from {player_name}: {data}")
 
         print(f"[ITEM] {player_name} uses item: {data}")
+
     def handle_item_use(self, player_name, data):
         #TODO apply item effects here to player data.
+        pass
 
     def handle_move(self, player_name, data):
+        pass
+
+    def register_player(self, player, data):
         pass
 
     def parse_message(self, message):

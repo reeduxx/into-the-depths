@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from client.constants import BLOCK_SHADING
 from client.screen_buffer import ScreenBuffer
-
+from typing import Optional
 class Menu(ABC):
     """
     Abstract base class for the game menus.
@@ -27,6 +27,7 @@ class Menu(ABC):
         self.buffer = ScreenBuffer(term)
         self._prev_width = term.width
         self._prev_height = term.height
+
     
     def window_resized(self) -> bool:
         """
@@ -93,7 +94,7 @@ class Menu(ABC):
                         self.buffer.draw_text(x, y, char)
 
     @abstractmethod
-    def run(self):
+    def run(self) -> Optional[str]:
         """
         Runs the menu loop.
 
